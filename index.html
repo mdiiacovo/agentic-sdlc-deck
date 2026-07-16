@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Engineering Org — GitHub</title>
+  <meta name="description" content="Customer outcomes presentation for Your Engineering Org — prepared by GitHub">
+  <meta property="og:title" content="Your Engineering Org — GitHub Customer Outcomes">
+  <meta property="og:description" content="Customer outcomes presentation for Your Engineering Org — prepared by GitHub">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="https://github.githubassets.com/favicons/favicon-dark.svg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    @font-face{font-family:'Mona Sans';src:url('https://cdn.jsdelivr.net/gh/github/mona-sans@main/fonts/webfonts/MonaSans[wght].woff2') format('woff2');font-weight:200 900;font-display:swap}
+    @font-face{font-family:'Hubot Sans';src:url('https://cdn.jsdelivr.net/gh/github/hubot-sans@main/fonts/webfonts/HubotSans[wght].woff2') format('woff2');font-weight:200 900;font-display:swap}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;width:100%}
+    body{font-family:'Mona Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#0d1117;color:#e6edf3;overflow:hidden;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,.display{font-family:'Hubot Sans','Mona Sans',sans-serif}
+    .font-mono{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace!important}
+    #main-container{width:100%;height:100%;display:flex;flex-direction:column;position:relative}
+    #scroll-content{flex:1;overflow-y:scroll;width:100%;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+    #progress-bar{height:3px;background:#58a6ff;width:0%;transition:width .4s ease,background .4s ease;position:fixed;top:0;left:0;z-index:100}
+    .dot-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(88,166,255,.07) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 70%)}
+    .section{min-height:100%;width:100%;display:flex;align-items:center;justify-content:center;padding:60px 40px;flex-shrink:0;position:relative;scroll-snap-align:start}
+    .section-content{max-width:900px;width:100%;position:relative;z-index:1}
+    .reveal-item{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+    .reveal-item.visible{opacity:1;transform:translateY(0)}
+    .reveal-item:nth-child(1){transition-delay:0s}.reveal-item:nth-child(2){transition-delay:.08s}.reveal-item:nth-child(3){transition-delay:.16s}.reveal-item:nth-child(4){transition-delay:.24s}.reveal-item:nth-child(5){transition-delay:.32s}
+    .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+    .reveal-right{opacity:0;transform:translateX(30px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+    .reveal-left.visible,.reveal-right.visible{opacity:1;transform:translateX(0)}
+    .grid-stagger>*{opacity:0;transform:translateY(16px) scale(.97);transition:opacity .4s ease,transform .4s cubic-bezier(.22,1,.36,1)}
+    .grid-stagger.visible>*:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+    .grid-stagger.visible>*:nth-child(2){opacity:1;transform:none;transition-delay:.12s}
+    .grid-stagger.visible>*:nth-child(3){opacity:1;transform:none;transition-delay:.19s}
+    .grid-stagger.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.26s}
+    .card{cursor:pointer;border:1px solid #30363d;border-radius:8px;padding:20px;background:#161b22;transition:all .25s ease}
+    .card:hover{border-color:#58a6ff;box-shadow:0 0 0 1px rgba(88,166,255,.12),0 8px 24px rgba(0,0,0,.35);transform:translateY(-2px)}
+    .card.expanded{background:#1c2128;border-color:#58a6ff}
+    .card-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .card-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .card-details{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s ease;margin-top:12px;padding-top:12px;border-top:1px solid #21262d}
+    .card.expanded .card-details{max-height:500px;opacity:1}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .accent-line{height:2px;width:60px;border-radius:1px;margin-top:16px;background-size:200% 100%;animation:shimmer 3s ease-in-out infinite}
+    .gh-label{display:inline-block;padding:3px 12px;border-radius:24px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+    .gh-stat{text-align:center;padding:16px;border-radius:8px;border:1px solid;transition:border-color .3s ease,transform .3s ease}
+    .gh-stat:hover{transform:scale(1.03)}
+    .glow-blue{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(88,166,255,.07) 0%,transparent 70%)}
+    .glow-green{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(63,185,80,.05) 0%,transparent 70%)}
+    .glow-purple{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(188,140,255,.05) 0%,transparent 70%)}
+    .glow-orange{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(210,153,34,.05) 0%,transparent 70%)}
+    .glow-red{background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(248,81,73,.05) 0%,transparent 70%)}
+    .slide-footer{position:absolute;bottom:20px;left:40px;right:40px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+    .slide-footer span{font-size:11px;color:#484f58}
+    .slide-footer .gh-brand{display:flex;align-items:center;gap:4px;opacity:.4}
+    #nav-dots{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:10px}
+    .nav-dot{width:8px;height:8px;border-radius:50%;background:#30363d;cursor:pointer;transition:all .3s ease}
+    .nav-dot.active{background:#58a6ff;box-shadow:0 0 8px rgba(88,166,255,.5);transform:scale(1.3)}
+    .nav-dot:hover{background:#58a6ff}
+    #notes-panel{position:fixed;bottom:0;left:0;right:0;z-index:200;transform:translateY(100%);transition:transform .3s ease;background:#161b22;border-top:1px solid #30363d;padding:16px 24px;max-height:35vh;overflow-y:auto}
+    #notes-panel.open{transform:translateY(0)}
+    #notes-toggle{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:201;background:#21262d;border:1px solid #30363d;color:#8b949e;font-size:11px;padding:5px 14px;border-radius:20px;cursor:pointer;transition:all .2s ease}
+    #notes-toggle:hover{background:#30363d;color:#e6edf3}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .cursor-blink::after{content:'|';color:#d29922;animation:blink .8s step-end infinite;margin-left:2px}
+    #scroll-content::-webkit-scrollbar{width:0}
+    .space-y-1>*+*{margin-top:4px}
+    .space-y-2>*+*{margin-top:8px}
+    .space-y-3>*+*{margin-top:12px}
+    .gh-logo{position:fixed;top:16px;left:20px;z-index:50;opacity:.5;transition:opacity .2s}.gh-logo:hover{opacity:1}
+  </style>
+ </head>
+ <body>
+  <div id="main-container">
+   <div id="progress-bar"></div>
+   <div class="dot-grid"></div>
+   <a href="https://github.com" target="_blank" rel="noopener" class="gh-logo" title="GitHub">
+    <svg height="24" viewBox="0 0 16 16" width="24" fill="#e6edf3"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+   </a>
+   <div id="nav-dots">
+     <div class="nav-dot active" data-index="0" onclick="scrollToSection(0)" title="Introduction"></div>
+     <div class="nav-dot" data-index="1" onclick="scrollToSection(1)" title="The Market Shift"></div>
+     <div class="nav-dot" data-index="2" onclick="scrollToSection(2)" title="The AI Journey"></div>
+     <div class="nav-dot" data-index="3" onclick="scrollToSection(3)" title="The Platform Difference"></div>
+     <div class="nav-dot" data-index="4" onclick="scrollToSection(4)" title="Security"></div>
+     <div class="nav-dot" data-index="5" onclick="scrollToSection(5)" title="Developer Experience"></div>
+     <div class="nav-dot" data-index="6" onclick="scrollToSection(6)" title="Roadmap"></div>
+     <div class="nav-dot" data-index="7" onclick="scrollToSection(7)" title="Next Steps"></div>
+   </div>
+   <div id="scroll-content">
+    <section class="section glow-blue" data-notes="Welcome. Thank you for taking the time today. This conversation isn't about GitHub — it's about Your Engineering Org's engineering future. I want to understand your world first. What's keeping your engineering leaders up at night? Listen before you present. Shift from resistance to resonance — earn their attention, then connect.">
+   <div class="section-content" style="text-align:center;">
+    <div class="reveal-item">
+     <svg height="48" viewBox="0 0 16 16" width="48" fill="#e6edf3" style="margin:0 auto 24px;display:block;opacity:0.8;"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    </div>
+    <h1 class="reveal-item text-5xl lg:text-7xl leading-tight" style="font-weight:800;color:#e6edf3;">Your Engineering Org</h1>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#58a6ff,transparent);background-size:200% 100%;margin:20px auto;"></div>
+    <p class="reveal-item text-xl mt-4" style="color:#8b949e;">The AI-Powered Developer Platform — Velocity, Security, and Governance at Scale</p>
+    <p class="reveal-item text-sm mt-8" style="color:#6e7681;">GitHub · July 2026</p>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>1 / 8</span></div>
+  </section>
+    <section class="section glow-blue" data-notes="OPEN — START WITH THEIR WORLD: Don’t open with GitHub. Open with what Your Engineering Org is experiencing. Reference their pain points: the challenges they shared. Then: &quot;We are in the middle innings of the age of AI — and the teams that do it intentionally win big.&quot; | WALK THE STATS: Each number is a business outcome, not a feature metric. 21% faster task completion (Google), 26% faster throughput (MIT Sloan), 4.7M+ Copilot subscribers, 15M+ users, 25M monthly engaged users. | KEY MESSAGE: &quot;The race has changed. It’s no longer about features. It’s about velocity, security, and governance at scale. GitHub is the AI-powered developer platform — the only platform that connects it all.&quot; | TRANSITION: &quot;Let me show you the three phases of the AI journey — and where Your Engineering Org can go.&quot;">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(88,166,255,.15);color:#58a6ff;">The Market Shift</span></div>
+    <h1 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">We are in the<br>middle innings of<br><span style="color:#58a6ff;">the age of AI</span></h1>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#58a6ff,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-lg mt-5 max-w-2xl leading-relaxed" style="color:#8b949e;">We are in the middle innings of the age of AI. In three years, the industry has moved from code completion to autonomous agents to platform orchestration. 90% of code will be written by agents. Your Engineering Org is navigating this shift right now — and the teams that approach it intentionally will have a compounding advantage.</p>
+    <div class="reveal-item grid grid-cols-2 md:grid-cols-4 gap-4 mt-10 grid-stagger"><div class="gh-stat" style="background:rgba(63,185,80,.04);border-color:rgba(63,185,80,.2);">
+      <p class="text-2xl display" style="color:#3fb950;font-weight:800;"><span class="counter" data-target="26" data-suffix="%">0</span></p>
+      <p class="text-xs mt-1" style="color:#6e7681;">Faster developer throughput (MIT Sloan)</p></div><div class="gh-stat" style="background:rgba(88,166,255,.04);border-color:rgba(88,166,255,.2);">
+      <p class="text-2xl display" style="color:#58a6ff;font-weight:800;"><span class="counter" data-target="21" data-suffix="%">0</span></p>
+      <p class="text-xs mt-1" style="color:#6e7681;">Faster task completion (Google)</p></div><div class="gh-stat" style="background:rgba(188,140,255,.04);border-color:rgba(188,140,255,.2);">
+      <p class="text-2xl display" style="color:#bc8cff;font-weight:800;"><span class="counter" data-target="9" data-suffix=".6→2.4d">0</span></p>
+      <p class="text-xs mt-1" style="color:#6e7681;">PR cycle reduced with AI</p></div><div class="gh-stat" style="background:rgba(210,153,34,.04);border-color:rgba(210,153,34,.2);">
+      <p class="text-2xl display" style="color:#d29922;font-weight:800;"><span class="counter" data-target="4" data-suffix=".5x">0</span></p>
+      <p class="text-xs mt-1" style="color:#6e7681;">ROI in year one</p></div></div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>2 / 8</span></div>
+  </section>
+    <section class="section glow-green" data-notes="FRAME — ASK BEFORE TELLING: &quot;Before I walk through this, where would you put Your Engineering Org on this journey right now?&quot; Let them self-assess. Listen first — shift from resistance to resonance. | PHASE 1: Most are here. Validate that. Real value, but incomplete. &quot;We moved from code completion to agents to platform orchestration.&quot; | PHASE 2: &quot;Your engineers stop getting interrupted by implementation tasks — they focus on the work only they can do. 90% of code will be written by agents.&quot; | PHASE 3: &quot;GitHub becomes the agentic control plane — velocity, security, and governance all connected. The only platform that connects it all.&quot; | KEY MESSAGE: It’s always, always, always about the customer.">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(63,185,80,.15);color:#3fb950;">The AI Journey</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">Where are you<br>in your <span style="color:#3fb950;">AI journey</span>?</h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#3fb950,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-4" style="color:#6e7681;">We are in the middle innings of the age of AI. Most teams are mid-Phase 1. The real business outcomes for Your Engineering Org unlock in Phases 2 and 3 — when GitHub becomes the agentic control plane.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 grid-stagger"><div class="card" onclick="toggleCard(this)" style="border-color:rgba(88,166,255,.25);">
+      <div class="card-header"><div class="card-icon" style="background:rgba(88,166,255,.12);"><i data-lucide="keyboard" style="width:18px;height:18px;color:#58a6ff;"></i></div>
+      <div><p class="text-xs font-mono tracking-wider" style="color:#58a6ff;font-size:10px;">PHASE 1</p><p style="font-weight:600;font-size:15px;">AI augments your developers</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Code completion and AI suggestions in the tools your team already uses.</p>
+      <p class="text-xs mt-2 font-mono" style="color:#58a6ff;">21% faster (Google) · 26% throughput gain (MIT Sloan)</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Real outcomes, real fast. GitHub Copilot — the most popular AI coding tool — helps developers complete tasks 21% faster and increases throughput by 26%. 15M+ users after free launch. 4.7M+ subscribers and growing. Most teams — including many at Your Engineering Org — are here today. But Phase 1 only optimizes the individual developer’s keyboard. The real unlock is next.</p></div></div><div class="card" onclick="toggleCard(this)" style="border-color:rgba(63,185,80,.25);">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="bot" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p class="text-xs font-mono tracking-wider" style="color:#3fb950;font-size:10px;">PHASE 2</p><p style="font-weight:600;font-size:15px;">Developers delegate to AI agents</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Issues → tested, reviewed PRs. Developers stay in strategic flow.</p>
+      <p class="text-xs mt-2 font-mono" style="color:#3fb950;">→ From task to tested PR</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">GitHub’s coding agent takes an Issue and handles the full implementation cycle: writes code, runs tests, self-reviews with Copilot Code Review, runs security scanning, and opens a draft PR. Agent mode in the IDE. Your best engineers focus on architecture and customer impact — not implementation boilerplate. 90% of code will be written by agents.</p></div></div><div class="card" onclick="toggleCard(this)" style="border-color:rgba(188,140,255,.25);">
+      <div class="card-header"><div class="card-icon" style="background:rgba(188,140,255,.12);"><i data-lucide="network" style="width:18px;height:18px;color:#bc8cff;"></i></div>
+      <div><p class="text-xs font-mono tracking-wider" style="color:#bc8cff;font-size:10px;">PHASE 3</p><p style="font-weight:600;font-size:15px;">GitHub becomes the agentic control plane</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Multiple agents. End-to-end governance. The platform that connects it all.</p>
+      <p class="text-xs mt-2 font-mono" style="color:#bc8cff;">⬡ The AI-powered developer platform</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Agent HQ coordinates multiple agents — GitHub Copilot plus third-party agents from Anthropic, OpenAI, Google, and more. Enterprise AI Controls give your CISOs the governance they need. Copilot Metrics dashboards let you prove ROI at enterprise, org, and developer level. GitHub is the control plane for agents — the only platform that connects velocity, security, and governance at scale.</p></div></div></div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>3 / 8</span></div>
+  </section>
+    <section class="section glow-orange" data-notes="FRAME — LAND THE BIG IDEA: Slow down here. Read the headline out loud: &quot;Acceleration without governance isn’t progress — it’s chaos.&quot; Pause. Then: &quot;That’s what GitHub solves. Not just speed. Velocity, security, and governance at scale. Together. The AI-powered developer platform.&quot; | THE CLOSE: Let the quote type itself. Read it aloud, slowly. The pause after the quote is the most important moment. Don’t fill it. Then: &quot;That’s the partnership I want to build with Your Engineering Org — together.&quot; It’s always, always, always about the customer." data-has-quote="true" data-slide-id="s_911vcu6">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(210,153,34,.15);color:#d29922;">The Platform Difference</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">Acceleration without<br>governance —<br>is <span style="color:#d29922;">chaos</span></h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#d29922,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-3" style="color:#6e7681;">Point solutions give Your Engineering Org speed in a straight line. GitHub is the AI-powered developer platform — the only platform that connects velocity, security, and governance at scale. The control plane for agents.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-3 gap-4 mt-7 grid-stagger"><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(88,166,255,.12);"><i data-lucide="zap" style="width:18px;height:18px;color:#58a6ff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Velocity that compounds</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#6e7681;">21% faster (Google) · 26% throughput gain (MIT Sloan)</p>
+      <p class="text-sm" style="color:#8b949e;">Faster delivery is a business outcome, not just a developer perk. We are in the middle innings of AI.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">GitHub Copilot — the most popular AI coding tool — helps developers complete tasks 21% faster (Google, 2024) and increases throughput by 26% (MIT Sloan, 2023). The &lt;strong style=&quot;color:#58a6ff;&quot;&gt;coding agent</strong> handles implementation end-to-end. 90% of code will be written by agents — GitHub is the control plane for that future.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="shield-check" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Security native to the workflow</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#6e7681;">Secret protection · code security · AI-powered autofix</p>
+      <p class="text-sm" style="color:#8b949e;">The cost of a breach dwarfs the cost of prevention. 14M private repos still lack code security.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">GitHub’s &lt;strong style=&quot;color:#3fb950;&quot;&gt;secret protection and code security</strong> catch vulnerabilities before they reach production — native to the developer workflow, not bolt-on. Secret scanning, CodeQL, Dependabot, and AI-powered autofix. Security that moves at the speed of your engineering team. 14M private repos without code security enabled = massive opportunity.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(210,153,34,.12);"><i data-lucide="bar-chart-3" style="width:18px;height:18px;color:#d29922;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Outcomes you can measure</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#6e7681;">Copilot Metrics · org-level dashboards</p>
+      <p class="text-sm" style="color:#8b949e;">If you can’t prove value, you can’t expand it.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Copilot Metrics gives you enterprise, org, and developer-level dashboards. Code generation volume, adoption, engagement, and PR lifecycle metrics. &lt;strong style=&quot;color:#d29922;&quot;&gt;Turn wins into the budget conversations that unlock the next phase of investment.</strong> 3,482 new logos in FY25. 300 enterprise ships (6/week).</p></div></div></div>
+    <div class="reveal-item mt-8 p-5 rounded-lg" style="border:1px solid #30363d;background:rgba(22,27,34,.8);">
+      <p class="text-base leading-relaxed quote-text" style="color:#e6edf3;font-weight:500;" data-quote="“Acceleration without governance isn’t progress — it’s chaos. GitHub gives you both: the velocity your developers demand and the controls your business requires. That’s the AI-powered developer platform. That’s the control plane for agents.”"></p>
+      <p class="text-xs mt-3" style="color:#6e7681;">That’s the partnership I’d like to build with every customer in this role.</p>
+    </div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>4 / 8</span></div>
+  </section>
+    <section class="section glow-green" data-notes="FRAME: &quot;The cost of a breach isn't the fine — it's the trust you lose.&quot; Start by asking Your Engineering Org about their current security posture. Listen first. Then: &quot;There are 14 million private repos on GitHub without code security enabled — that's a massive opportunity to get ahead of risk.&quot; Walk each feature, emphasizing that security is NATIVE to the developer workflow, not bolt-on. Use the language: &quot;secret protection&quot; and &quot;code security,&quot; not just &quot;GHAS.&quot; Ask: &quot;Which of these would have the biggest impact on your team today?&quot;">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(63,185,80,.15);color:#3fb950;">Security</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">Security native to<br>the workflow — not<br><span style="color:#3fb950;">bolt-on</span></h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#3fb950,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-3" style="color:#6e7681;">Your Engineering Org can't afford to choose between velocity and security. With GitHub, security is native — not a separate tool, not a separate team, not a separate workflow. 14M private repos still don't have code security enabled. That's the opportunity.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 grid-stagger"><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="zap" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Secret Protection</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#3fb950;">200+ patterns · push protection · partner program</p>
+      <p class="text-sm" style="color:#8b949e;">Secrets blocked before they enter your codebase — across every push, every PR.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Push protection stops secrets at the door. Partner program alerts providers automatically. Custom patterns for your organization's secrets. This is secret protection, not just scanning — prevention, not detection.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="bot" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Code Security (CodeQL)</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#3fb950;">Semantic analysis · AI-powered autofix</p>
+      <p class="text-sm" style="color:#8b949e;">Find vulnerabilities that pattern-matching tools miss — in the PR, not production.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">CodeQL queries understand your code semantically. Copilot Autofix suggests remediation right in the PR — developers fix issues in minutes, not days. Community-driven query packs for OWASP Top 10, CWE/SANS.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="check-circle" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Dependabot</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#3fb950;">Automated updates · grouped PRs</p>
+      <p class="text-sm" style="color:#8b949e;">Supply chain security that keeps dependencies current without developer toil.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Automated security updates, version updates, and grouped PRs. Multi-ecosystem support. Security advisories from the GitHub Advisory Database.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(63,185,80,.12);"><i data-lucide="layers" style="width:18px;height:18px;color:#3fb950;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">AI-Powered Autofix</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#3fb950;">Copilot · automated remediation · native to the workflow</p>
+      <p class="text-sm" style="color:#8b949e;">AI suggests security fixes right where developers work — no context switching, no separate tools.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Copilot Autofix generates code fixes for vulnerabilities found by code scanning. Security becomes a developer outcome, not a separate team's bottleneck. Native to GitHub — not bolted on after the fact.</p></div></div></div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>5 / 8</span></div>
+  </section>
+    <section class="section glow-purple" data-notes="FRAME: Start by asking Your Engineering Org about their current developer experience. Listen first — shift from resistance to resonance. Then: &quot;Developer experience isn't a perk — it's a business outcome. Happy developers ship faster, stay longer, and recruit their friends.&quot; Position Copilot as the most popular AI coding tool — multi-model, with agent mode, coding agent, and code review agent. Walk each feature tied to Your Engineering Org's pain points. If they mention onboarding, lean into Codespaces + Copilot. If velocity, lean into coding agent. Key stat: 90% of code will be written by agents — Your Engineering Org needs to prepare now.">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(188,140,255,.15);color:#bc8cff;">Developer Experience</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">The most popular<br>AI coding tool —<br>and <span style="color:#bc8cff;">so much more</span></h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#bc8cff,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-3" style="color:#6e7681;">We are in the middle innings of the age of AI. GitHub Copilot is the most popular AI coding tool (Pragmatic Engineer survey) with 15M+ users after free launch and 4.7M+ subscribers. But Your Engineering Org needs more than completion — they need a platform.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 grid-stagger"><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(188,140,255,.12);"><i data-lucide="zap" style="width:18px;height:18px;color:#bc8cff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">GitHub Copilot</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#bc8cff;">4.7M+ subscribers · 15M+ users · multi-model</p>
+      <p class="text-sm" style="color:#8b949e;">The most popular AI coding tool — multi-model (GPT, Claude, Gemini), beyond code completion into agent mode.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Code suggestions, chat, inline edits, CLI assistance, agent mode. Multi-model choice: GPT-4o, Claude, Gemini. Knowledge bases for organization-specific context. We moved from code completion to agents to platform orchestration.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(188,140,255,.12);"><i data-lucide="bot" style="width:18px;height:18px;color:#bc8cff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Coding Agent</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#bc8cff;">Issues → tested PRs autonomously</p>
+      <p class="text-sm" style="color:#8b949e;">Assign an issue to Copilot — it writes code, runs tests, opens a PR. Developers delegate, not just augment.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">The coding agent handles implementation end-to-end: writes code, runs tests, self-reviews with Copilot Code Review, runs security scanning. Phase 2 of the AI journey: developers delegate to agents. Your best engineers focus on architecture and customer impact.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(188,140,255,.12);"><i data-lucide="check-circle" style="width:18px;height:18px;color:#bc8cff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Code Review Agent</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#bc8cff;">Instant first-pass feedback</p>
+      <p class="text-sm" style="color:#8b949e;">Every PR gets AI review — human reviewers focus on architecture, not syntax.</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Automated review catches style issues, potential bugs, and security concerns. Review comments include suggested fixes. Custom review instructions per repository. Part of the agentic control plane.</p></div></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(188,140,255,.12);"><i data-lucide="layers" style="width:18px;height:18px;color:#bc8cff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">GitHub Codespaces</p></div></div>
+      <p class="text-xs mb-1 font-mono" style="color:#bc8cff;">Dev environments in seconds</p>
+      <p class="text-sm" style="color:#8b949e;">New engineers contributing in minutes, not days. No &quot;works on my machine.&quot;</p>
+      <div class="card-details"><p class="text-xs leading-relaxed" style="color:#8b949e;">Pre-configured cloud dev environments. Consistent tooling across the team. Start coding from any device, anywhere. Templates for common project types.</p></div></div></div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>6 / 8</span></div>
+  </section>
+    <section class="section glow-green" data-notes="FRAME: &quot;We are in the middle innings of the age of AI. The journey goes from AI augmenting developers, to developers delegating to agents, to GitHub becoming the agentic control plane. We don't recommend a big bang — the teams that succeed roll out intentionally.&quot; Customize timelines to Your Engineering Org's reality. If they're already on GitHub, skip Phase 1 basics. If they're migrating from another platform, extend Phase 1. Mention metered billing for flexible scaling. Always end with: &quot;This is a starting point — we'll adapt it together. It's always, always, always about the customer.&quot;">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(57,211,83,.15);color:#39d353;">Implementation Roadmap</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">A phased approach<br>to <span style="color:#39d353;">transformation</span></h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#39d353,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-3" style="color:#6e7681;">An intentional rollout plan for Your Engineering Org — aligned with the three phases of the AI journey. Not a big bang, but a compounding investment.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 grid-stagger"><div class="card" onclick="toggleCard(this)" style="border-color:rgba(88,166,255,.25);">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(88,166,255,.12);"><span style="color:#58a6ff;font-weight:800;font-size:14px;">1</span></div>
+        <div><p class="text-xs font-mono" style="color:#58a6ff;">Weeks 1–4</p><p style="font-weight:600;font-size:15px;">Phase 1: AI Augments Developers</p></div>
+      </div>
+      <div class="card-details" style="max-height:500px;opacity:1;"><div class="space-y-1">
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(88,166,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#58a6ff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Copilot rollout to pilot team (50–100 developers)</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(88,166,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#58a6ff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Enable secret protection and code security on critical repos</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(88,166,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#58a6ff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Establish baseline Copilot Metrics dashboards</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(88,166,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#58a6ff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">CSA-led enablement sessions</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(88,166,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#58a6ff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Evaluate metered billing model for flexible scaling</span>
+      </div></div></div>
+    </div><div class="card" onclick="toggleCard(this)" style="border-color:rgba(63,185,80,.25);">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(63,185,80,.12);"><span style="color:#3fb950;font-weight:800;font-size:14px;">2</span></div>
+        <div><p class="text-xs font-mono" style="color:#3fb950;">Months 2–3</p><p style="font-weight:600;font-size:15px;">Phase 2: Developers Delegate to Agents</p></div>
+      </div>
+      <div class="card-details" style="max-height:500px;opacity:1;"><div class="space-y-1">
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(63,185,80,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#3fb950;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Expand Copilot to all engineering teams</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(63,185,80,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#3fb950;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Enable coding agent and agent mode on selected repos</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(63,185,80,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#3fb950;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Integrate with existing CI/CD (Actions migration or hybrid)</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(63,185,80,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#3fb950;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Security policy automation with rulesets</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(63,185,80,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#3fb950;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Data residency configuration (EU, Australia, US FedRAMP)</span>
+      </div></div></div>
+    </div><div class="card" onclick="toggleCard(this)" style="border-color:rgba(188,140,255,.25);">
+      <div class="card-header">
+        <div class="card-icon" style="background:rgba(188,140,255,.12);"><span style="color:#bc8cff;font-weight:800;font-size:14px;">3</span></div>
+        <div><p class="text-xs font-mono" style="color:#bc8cff;">Months 4–6</p><p style="font-weight:600;font-size:15px;">Phase 3: GitHub as the Agentic Control Plane</p></div>
+      </div>
+      <div class="card-details" style="max-height:500px;opacity:1;"><div class="space-y-1">
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(188,140,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#bc8cff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Full secret protection and code security rollout across all repos</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(188,140,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#bc8cff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Agent HQ + third-party agent integration — GitHub as the control plane for agents</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(188,140,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#bc8cff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Enterprise AI Controls and governance at scale</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(188,140,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#bc8cff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Executive ROI review with Copilot Metrics</span>
+      </div>
+      <div class="flex items-center gap-2 p-2 rounded-md" style="background:rgba(188,140,255,.06);">
+        <i data-lucide="check-circle" style="width:14px;height:14px;color:#bc8cff;flex-shrink:0;"></i>
+        <span class="text-xs" style="color:#e6edf3;">Enterprise life migration planning (if applicable)</span>
+      </div></div></div>
+    </div></div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>7 / 8</span></div>
+  </section>
+    <section class="section glow-blue" data-notes="THE CLOSE: This is the most important slide. Don't rush it. It's always, always, always about the customer. Read each action, then pause. Ask: &quot;Which of these resonates most with where Your Engineering Org is right now?&quot; Let them choose the next step. You're not closing a deal — you're opening a partnership. Shift from resistance to resonance — you've earned their attention, now connect it to their world." data-has-quote="true" data-slide-id="s_h05imv9">
+   <div class="section-content">
+    <div class="reveal-item"><span class="gh-label" style="background:rgba(88,166,255,.15);color:#58a6ff;">Next Steps</span></div>
+    <h2 class="reveal-item text-5xl lg:text-6xl leading-tight mt-6" style="font-weight:800;">Let's build this<br><span style="color:#58a6ff;">together</span></h2>
+    <div class="reveal-item accent-line" style="background:linear-gradient(90deg,transparent,#58a6ff,transparent);background-size:200% 100%"></div>
+    <p class="reveal-item text-sm mt-3" style="color:#6e7681;">The partnership I want to build with Your Engineering Org.</p>
+    <div class="reveal-item grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 grid-stagger"><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(88,166,255,.12);"><i data-lucide="rocket" style="width:18px;height:18px;color:#58a6ff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Pilot Program</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Start with a focused team — 50–100 developers. Measure with Copilot Metrics. Prove value in 30 days. We are in the middle innings of AI — the time to start is now.</p></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(88,166,255,.12);"><i data-lucide="code" style="width:18px;height:18px;color:#58a6ff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Technical Deep-Dive</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Schedule a hands-on session with your engineering leads. See Copilot, agent mode, secret protection, code security, and Actions in your codebase.</p></div><div class="card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon" style="background:rgba(88,166,255,.12);"><i data-lucide="users" style="width:18px;height:18px;color:#58a6ff;"></i></div>
+      <div><p style="font-weight:600;font-size:15px;">Executive Briefing</p></div></div>
+      <p class="text-sm" style="color:#8b949e;">Connect your CTO/VP Eng with GitHub leadership for a strategic conversation about AI, the agentic control plane, and platform direction.</p></div></div>
+    <div class="reveal-item mt-8 p-5 rounded-lg" style="border:1px solid #30363d;background:rgba(22,27,34,.8);">
+      <p class="text-base leading-relaxed quote-text" style="color:#e6edf3;font-weight:500;" data-quote="&quot;We are in the middle innings of the age of AI. 90% of code will be written by agents. The teams winning this era aren't the ones who adopted fastest — they're the ones who adopted most intentionally, with velocity, security, and governance at scale, on the only platform that connects it all.&quot;"></p>
+    </div>
+   </div>
+   <div class="slide-footer"><span>GitHub</span><span class="gh-brand"><svg height="12" viewBox="0 0 16 16" width="12" fill="#484f58"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</span><span>8 / 8</span></div>
+  </section>
+   </div>
+  </div>
+  <button id="notes-toggle" onclick="toggleNotes()">Speaker Notes ▲</button>
+  <div id="notes-panel"><p id="notes-text" style="font-size:13px;color:#8b949e;line-height:1.7;white-space:pre-wrap;"></p></div>
+  <script>
+   const sections=document.querySelectorAll('.section');
+   const dots=document.querySelectorAll('.nav-dot');
+   const progressBar=document.getElementById('progress-bar');
+   const notesText=document.getElementById('notes-text');
+   const notesToggle=document.getElementById('notes-toggle');
+   const notesPanel=document.getElementById('notes-panel');
+   const slideColors=["#58a6ff","#58a6ff","#3fb950","#d29922","#3fb950","#bc8cff","#39d353","#58a6ff"];
+   let notesOpen=false;
+   let currentSection=0;
+   function scrollToSection(i){sections[i]?.scrollIntoView({behavior:'smooth'});}
+   function toggleNotes(){notesOpen=!notesOpen;notesPanel.classList.toggle('open',notesOpen);notesToggle.textContent=notesOpen?'Speaker Notes ▼':'Speaker Notes ▲';}
+   function toggleCard(el){el.classList.toggle('expanded');}
+   function updateSection(i){
+    currentSection=i;
+    dots.forEach((d,j)=>{d.classList.toggle('active',j===i);});
+    const pct=sections.length>1?i/(sections.length-1)*100:0;
+    progressBar.style.width=pct+'%';
+    progressBar.style.background=slideColors[i]||'#58a6ff';
+    notesText.textContent=sections[i]?.dataset?.notes||'';
+    if(sections[i]?.dataset?.hasQuote==='true'){startTyping(sections[i]);}
+   }
+   function startTyping(section){
+    const el=section.querySelector('.quote-text');
+    if(!el||el.dataset.typed)return;
+    el.dataset.typed='1';
+    el.classList.add('cursor-blink');
+    const quote=el.dataset.quote||'';
+    let k=0;
+    const iv=setInterval(()=>{
+     if(k>=quote.length){clearInterval(iv);el.classList.remove('cursor-blink');return;}
+     el.textContent+=quote[k++];
+    },28);
+   }
+   const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+     if(e.isIntersecting){
+      const i=Array.from(sections).indexOf(e.target);
+      if(i>=0)updateSection(i);
+      e.target.querySelectorAll('.reveal-item,.reveal-left,.reveal-right').forEach(el=>el.classList.add('visible'));
+      const sg=e.target.querySelector('.grid-stagger');
+      if(sg)setTimeout(()=>sg.classList.add('visible'),200);
+     }
+    });
+   },{threshold:0.4});
+   sections.forEach(s=>observer.observe(s));
+   document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'||e.key==='PageDown')scrollToSection(Math.min(currentSection+1,sections.length-1));
+    if(e.key==='ArrowUp'||e.key==='PageUp')scrollToSection(Math.max(currentSection-1,0));
+    if(e.key==='n'||e.key==='N')toggleNotes();
+   });
+   setTimeout(()=>{if(typeof lucide!=='undefined')lucide.createIcons();},100);
+   function animateCounters(){
+    document.querySelectorAll('.counter:not([data-animated])').forEach(el=>{
+     el.dataset.animated='1';
+     const target=+el.dataset.target;
+     const suffix=el.dataset.suffix||'';
+     const dur=1800;
+     const start=performance.now();
+     function step(now){
+      const p=Math.min((now-start)/dur,1);
+      const ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(ease*target)+suffix;
+      if(p<1)requestAnimationFrame(step);
+     }
+     requestAnimationFrame(step);
+    });
+   }
+   new MutationObserver(()=>animateCounters()).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});
+   animateCounters();
+  </script>
+ </body>
+</html>
