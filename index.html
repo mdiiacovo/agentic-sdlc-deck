@@ -19,7 +19,19 @@
   #hub-link{position:fixed;top:14px;left:16px;z-index:210;background:rgba(33,38,45,.85);border:1px solid #30363d;color:#8b949e;font-size:12px;padding:5px 12px;border-radius:20px;text-decoration:none;backdrop-filter:blur(8px);transition:all .2s}
   #hub-link:hover{color:#e6edf3;background:#30363d}
   #make-link{position:fixed;top:14px;left:92px;z-index:210;background:rgba(210,153,34,.12);border:1px solid rgba(210,153,34,.4);color:#d29922;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;text-decoration:none;backdrop-filter:blur(8px);transition:all .2s}
-  #make-link:hover{background:rgba(210,153,34,.22);color:#f0c651}</style>
+  #make-link:hover{background:rgba(210,153,34,.22);color:#f0c651}
+  #pdf-btn{position:fixed;bottom:16px;right:16px;z-index:201;background:rgba(63,185,80,.14);border:1px solid rgba(63,185,80,.5);color:#3fb950;font-size:12px;font-weight:600;padding:6px 13px;border-radius:20px;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s}
+  #pdf-btn:hover{background:rgba(63,185,80,.24);color:#56d364}
+  @media print{
+    #hub-link,#make-link,#pdf-btn,#nav-dots,#notes-panel,#notes-toggle,#progress-bar,.gh-logo{display:none!important}
+    html,body{overflow:visible!important;height:auto!important;background:#0d1117!important}
+    #main-container,#scroll-content{height:auto!important;overflow:visible!important;display:block!important}
+    .section{min-height:auto!important;page-break-after:always;break-after:page;background:#0d1117!important}
+    .section:last-child{page-break-after:auto}
+    .reveal-item,.reveal-left,.reveal-right,.grid-stagger>*{opacity:1!important;transform:none!important}
+    *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+    @page{size:landscape;margin:0}
+  }</style>
   <link rel="icon" href="https://github.githubassets.com/favicons/favicon-dark.svg" type="image/svg+xml">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -88,6 +100,7 @@
  <body>
   <a href="https://mdiiacovo.github.io/" id="hub-link">← Hub</a>
   <a href="https://mdiiacovo.github.io/csa-deck-generator/" id="make-link" title="Create your own deck with the Presentation Generator">✨ Make your own →</a>
+  <button id="pdf-btn" onclick="window.print()" title="Download a PDF to leave with the customer">📄 Leave-behind</button>
   <div id="main-container">
    <div id="progress-bar"></div>
    <div class="dot-grid"></div>
